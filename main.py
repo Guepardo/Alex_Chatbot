@@ -17,9 +17,12 @@ def main():
 	if mode == 'learn': 
 		print("Initing on learn mode")
 		alex = BrainTrain()
+		alex.train_by_portugues_corpus()
+		alex.train_by_some_exemples()
 		alex.train_by_data_from_database()
 	else: 
 		alex = Brain()
 		while True: 
-			alex.get_response('Vamos começar')
+			alex.get_response('  ')
+			print 'User - '
 main()

@@ -2,7 +2,7 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer, ListTrainer
 
-from kernel.brain_styles.terminal import Terminal
+from kernel.brain_styles.terminal_mongodb import TerminalMongodb
 from enums.bot import Name, Style
 
 from helpers.database import Database
@@ -15,7 +15,7 @@ class BrainTrain(ChatBot):
 	def __init__(cls):
 		# loading super class with some style
 		storage_adapter, input_adapter, output_adapter, \
-		logic_adapters, database, filters = Terminal.get_style()
+		logic_adapters, database, filters = TerminalMongodb.get_style()
 
 		# loading super class with some style
 		super(BrainTrain, cls).__init__(Name.BOT_NAME, \
@@ -42,6 +42,11 @@ class BrainTrain(ChatBot):
 		cls.set_trainer(ListTrainer)
 		cls.train(training_list)
 
+	def train_by_some_exemples(cls): 
+		cls.train_by_list(['Quem te programou?', 'Allyson Maciel'])
+		cls.train_by_list(['Quem é o seu mestre?', 'Allyson Maciel'])
+		cls.train_by_list(['Em qual linguagem você é escrito?', 'Fui escrito em Python e você?'])
+
 	def train_by_data_from_database(cls): 
 		cls.set_trainer(ListTrainer)
 
@@ -59,13 +64,10 @@ class BrainTrain(ChatBot):
 			
 			if len(temp) > 0: 
 				statement = temp[0][0]
-				data_set = [unicode(answer.replace('\n','').strip(), errors='replace'), unicode(statement.replace('\n','').strip(), errors='replace')]
+				data_set = [unicode(statement.replace('\n','').strip(), errors='replace'), unicode(answer.replace('\n','').strip(), errors='replace')]
 				print(data_set)
 				cls.train(data_set)
 			else: 
 				continue
-
-			if count == 1000: 
-				break
 
 		db.close()
