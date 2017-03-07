@@ -35,7 +35,7 @@ python main.py learn
 #### Testes
 A motivo de protótipo, os testes foram executados apenas via command line. 
 
-###### Conversando com o bot com o preset estático de treino
+##### Conversando com o bot com o preset estático de treino
 O 'preset' estático refere-se as três perguntas e respostas abaixo: 
 ```python
 'Quem te programou?' -> 'Allyson Maciel'
@@ -52,6 +52,7 @@ Bot - Fui escrito em Python e você?
 ```
 
 Já em uma conversação livre, ou seja, utilizado o corpo de treino coletado no Telegram, as conversas se tornam bem instáveis. Isso ocorre porque muitas respostas dadas as mensagens em um chat dependerem muito do contexto da conversa. No entanto, algumas mensagens que tem o escopo genérico performam bem com essa técnica. 
+
 ``` shell
 User - Oi
 Bot - Olá
