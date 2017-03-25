@@ -20,7 +20,7 @@ class Brain(ChatBot):
 			output_adapter=output_adapter, 
 			logic_adapters=logic_adapters, 
 			database=database,
-			filters=filters) 
+			filters=filters, read_only=True) 
 	
 	# function to get reponses from an statement
 	# def response(cls, statement):
