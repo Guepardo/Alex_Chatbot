@@ -20,8 +20,14 @@ class Brain(ChatBot):
 			output_adapter=output_adapter, 
 			logic_adapters=logic_adapters, 
 			database=database,
-			filters=filters, read_only=True) 
-	
+			filters=filters, read_only=True)
+
+	# Simple singleton 
+	def __new__(cls, *args, **kwargs):
+		if not hasattr(cls, '_instance'): 
+			cls._instance = super(Brain, cls).__new__(cls, *args, **kwargs)
+		return cls._instance
+
 	# function to get reponses from an statement
 	# def response(cls, statement):
 	# 	return cls.get_response(statement)

@@ -3,6 +3,10 @@ import sys
 from kernel.brain import Brain
 from kernel.brain_train import BrainTrain
 from telegram_interface.telegram_connector import TelegramConnector
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
 def main():
 	TelegramConnector().start_bot() 
 	# # gettting some command line args
