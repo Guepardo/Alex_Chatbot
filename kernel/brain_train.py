@@ -6,7 +6,7 @@ from kernel.brain_styles.terminal_mongodb import TerminalMongodb
 from enums.bot import Name, Style
 
 from helpers.database import Database
-import sys
+import sys, os, json
 
 reload(sys)  
 sys.setdefaultencoding('utf-8')
@@ -47,27 +47,14 @@ class BrainTrain(ChatBot):
 		cls.train_by_list(['Quem é o seu mestre?', 'Allyson Maciel'])
 		cls.train_by_list(['Em qual linguagem você é escrito?', 'Fui escrito em Python e você?'])
 
-	def train_by_data_from_database(cls): 
+	def train_by_data_from_database(cls):
 		cls.set_trainer(ListTrainer)
+		files = [ file for file in os.listdir('./training_set')]
 
-		db = Database()
-		cur = db.get_cursor()
-
-		query = """SELECT msg, replay_to_id FROM messages WHERE replay_to_id IS NOT NULL order by id desc"""
-		result = db.execute(query)
-		count = 0
-		for row in result:
-			count += 1 
-			answer = row[0]
-			query = """SELECT msg FROM messages WHERE telegram_id = {replay_to_id}""".format(replay_to_id=row[1])
-			temp = db.execute(query)
-			
-			if len(temp) > 0: 
-				statement = temp[0][0]
-				data_set = [unicode(statement.replace('\n','').strip(), errors='replace'), unicode(answer.replace('\n','').strip(), errors='replace')]
-				print(data_set)
-				cls.train(data_set)
-			else: 
-				continue
-
-		db.close()
+		for file in files: 
+			arq = open('./training_set/%s' % file)
+			train_set = json.loads(arq.readline())
+			for train in train_set:
+				cls.train([train['question'], train['answer']])
+				print(train)
+				break
